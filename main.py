@@ -13,6 +13,10 @@ LINE = "My week: wrote 200 lines, deleted 190 of them, and the one line that sur
 
 
 def main():
+    # Sealed scorer takes 1-100 chars on one line: fail loudly instead
+    # of ever writing an entry the grader would reject.
+    if "\n" in LINE or "\r" in LINE or not 1 <= len(LINE) <= 100:
+        raise ValueError("entry line must be one line of 1-100 characters")
     out = os.environ.get("ENTRY_OUTPUT", "/output/entry.txt")
     parent = os.path.dirname(out)
     if parent:
